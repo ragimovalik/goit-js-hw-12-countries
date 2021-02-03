@@ -1,0 +1,13 @@
+<h2 class="country__title"> {{name}} </h2>
+<div class="flex">
+    <div class="country__info-list">
+        <p class="country__info-item">Capital: <span class="country__info-result">{{capital}}</span></p>
+        <p class="country__info-item">Population: <span class="country__info-result">{{population}}</span></p>
+        <ul class="country__info-item languages">Languages:
+            {{#each languages}}
+            <li class="language country__info-result">{{this.name}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    <img class="country__flag" src="{{flag}}" alt="flag of {{name}}" width=250>
+</div>
