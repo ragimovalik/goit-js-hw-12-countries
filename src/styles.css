@@ -63,6 +63,13 @@ body {
   padding: 10px;
 }
 
+.countries__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
 /* Country-card styles (when result = 1 country)*/
 
 .flex {
