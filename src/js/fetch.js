@@ -1,23 +1,64 @@
 import debounce from 'lodash.debounce';
 import templateMarkup from '../templates/template.hbs';
+import countryCard from '../templates/countrycard.hbs';
+import fetchCountries from './fetchCountries.js';
+import { myNotice, myError } from './notifications.js';
 
-const url = 'https://restcountries.eu/rest/v2/name/';
-const inputImitation = 'united';
+const BASE_URL = 'https://restcountries.eu/rest/v2/name/';
 
-const ref = document.querySelector('.results__box');
-console.log(ref);
+const inputEl = document.getElementById('input');
+const searchResultEl = document.querySelector('.results__box');
 
-function bravo(charlie) {
-  const delta = url + `${charlie}`;
+inputEl.addEventListener('input', debounce(inputedTextHandler, 500));
 
-  return fetch(delta)
-    .then(res => res.json())
-    .then(data => data);
+function inputedTextHandler() {
+  let inputedText = (inputedText = inputEl.value);
+  const url = BASE_URL + inputedText;
+
+  fetchCountries(url)
+    .then(fetchHandler)
+    .finally(() => {
+      setTimeout(() => {
+        inputEl.value = '';
+      }, 3000);
+    });
 }
 
-function foxtrot(names) {
+function fetchHandler(names) {
+  if (names.status === 404) {
+    errorMessage();
+  }
+
+  if (names.length === 1) {
+    renderCountry(names);
+  }
+
+  if (names.length > 1 && names.length < 10) {
+    renderCountries(names);
+  }
+
+  if (names.length > 10) {
+    renderNone();
+  }
+}
+
+function renderCountry(name) {
+  const markup2 = countryCard(...name);
+  searchResultEl.innerHTML = markup2;
+}
+
+function renderCountries(names) {
   const markup = templateMarkup(names);
-  ref.insertAdjacentHTML('afterbegin', markup);
+  searchResultEl.innerHTML = markup;
 }
 
-bravo(inputImitation).then(foxtrot);
+function renderNone() {
+  searchResultEl.innerHTML = '';
+  myNotice();
+  // return console.log('Too much results');
+}
+
+function errorMessage() {
+  searchResultEl.innerHTML = '';
+  myError();
+}
