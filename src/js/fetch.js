@@ -13,8 +13,12 @@ inputEl.addEventListener('input', debounce(inputedTextHandler, 500));
 inputEl.addEventListener('blur', () => (inputEl.value = ''));
 
 function inputedTextHandler() {
-  let inputedText = (inputedText = inputEl.value);
+  let inputedText = inputEl.value;
   const url = BASE_URL + inputedText;
+
+  // if (inputEl.value.length === 1) {
+  //   return;
+  // }
 
   fetchCountries(url).then(fetchHandler);
   // .finally(() => {});

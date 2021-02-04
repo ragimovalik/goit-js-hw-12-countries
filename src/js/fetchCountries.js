@@ -11,7 +11,7 @@ export default function fetchCountries(searchQuery) {
       },
       reason => {
         // fetchError();
-        console.log('Error! Some problems on url or connection');
+        console.log('Error! Some problems');
       },
     );
 }
