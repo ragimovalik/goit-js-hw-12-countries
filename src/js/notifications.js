@@ -15,8 +15,8 @@ export function myNotice() {
     stack: new Stack({
       dir1: 'down',
       dir2: 'right',
-      firstpos1: 20,
-      firstpos2: 20,
+      firstpos1: 80,
+      firstpos2: 10,
       maxOpen: 2,
       modal: false,
       maxStrategy: 'close',
@@ -33,8 +33,8 @@ export function myError() {
     stack: new Stack({
       dir1: 'down',
       dir2: 'right',
-      firstpos1: 20,
-      firstpos2: 20,
+      firstpos1: 80,
+      firstpos2: 10,
       maxOpen: 2,
       modal: false,
       maxStrategy: 'close',
@@ -51,8 +51,8 @@ export function fetchError() {
     stack: new Stack({
       dir1: 'down',
       dir2: 'right',
-      firstpos1: 20,
-      firstpos2: 20,
+      firstpos1: 80,
+      firstpos2: 10,
       maxOpen: 2,
       modal: false,
       maxStrategy: 'close',
