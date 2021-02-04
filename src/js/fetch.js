@@ -10,55 +10,35 @@ const inputEl = document.getElementById('input');
 const searchResultEl = document.querySelector('.results__box');
 
 inputEl.addEventListener('input', debounce(inputedTextHandler, 500));
+inputEl.addEventListener('blur', () => (inputEl.value = ''));
 
 function inputedTextHandler() {
   let inputedText = (inputedText = inputEl.value);
   const url = BASE_URL + inputedText;
 
-  fetchCountries(url)
-    .then(fetchHandler)
-    .finally(() => {
-      setTimeout(() => {
-        inputEl.value = '';
-      }, 3000);
-    });
+  fetchCountries(url).then(fetchHandler);
+  // .finally(() => {});
 }
 
-function fetchHandler(names) {
-  if (names.status === 404) {
-    errorMessage();
+function fetchHandler(countries) {
+  if (!countries) {
+    searchResultEl.innerHTML = '';
+    myError();
+    return;
   }
 
-  if (names.length === 1) {
-    renderCountry(names);
+  if (countries.length >= 2 && countries.length < 10) {
+    const markup = templateMarkup(countries);
+    searchResultEl.innerHTML = markup;
   }
 
-  if (names.length > 1 && names.length < 10) {
-    renderCountries(names);
+  if (countries.length > 10) {
+    searchResultEl.innerHTML = '';
+    myNotice();
   }
 
-  if (names.length > 10) {
-    renderNone();
+  if (countries.length === 1) {
+    const markup2 = countryCard(...countries);
+    searchResultEl.innerHTML = markup2;
   }
-}
-
-function renderCountry(name) {
-  const markup2 = countryCard(...name);
-  searchResultEl.innerHTML = markup2;
-}
-
-function renderCountries(names) {
-  const markup = templateMarkup(names);
-  searchResultEl.innerHTML = markup;
-}
-
-function renderNone() {
-  searchResultEl.innerHTML = '';
-  myNotice();
-  // return console.log('Too much results');
-}
-
-function errorMessage() {
-  searchResultEl.innerHTML = '';
-  myError();
 }
