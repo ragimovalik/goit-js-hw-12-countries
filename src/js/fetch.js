@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce';
-import templateMarkup from '../templates/template.hbs';
-import countryCard from '../templates/countrycard.hbs';
+import countriesListTemplate from '../templates/template.hbs';
+import countryCardTemplate from '../templates/countrycard.hbs';
 import fetchCountries from './fetchCountries.js';
 import { myNotice, myError } from './notifications.js';
 
@@ -13,36 +13,48 @@ inputEl.addEventListener('input', debounce(inputedTextHandler, 500));
 inputEl.addEventListener('blur', () => (inputEl.value = ''));
 
 function inputedTextHandler() {
-  let inputedText = inputEl.value;
-  const url = BASE_URL + inputedText;
+  const url = BASE_URL + inputEl.value;
 
-  // if (inputEl.value.length === 1) {
-  //   return;
-  // }
-
-  fetchCountries(url).then(fetchHandler);
-  // .finally(() => {});
+  fetchCountries(url)
+    .then(fetchHandler)
+    .catch(error => myError());
+  // .finally(() => {inputEl.value = ''});
 }
 
 function fetchHandler(countries) {
-  if (!countries) {
-    searchResultEl.innerHTML = '';
-    myError();
-    return;
-  }
-
   if (countries.length >= 2 && countries.length < 10) {
-    const markup = templateMarkup(countries);
-    searchResultEl.innerHTML = markup;
+    const markupCountries = countriesListTemplate(countries);
+    searchResultEl.innerHTML = markupCountries;
+
+    searchResultEl.addEventListener('click', e => {
+      inputEl.value = e.target.textContent.trim();
+      inputedTextHandler();
+    });
+
+    return;
   }
 
   if (countries.length > 10) {
     searchResultEl.innerHTML = '';
     myNotice();
+    return;
   }
 
   if (countries.length === 1) {
-    const markup2 = countryCard(...countries);
-    searchResultEl.innerHTML = markup2;
+    const markupCountry = countryCardTemplate(...countries);
+    searchResultEl.innerHTML = markupCountry;
+    return;
   }
 }
+
+// function countriesRender(countries) {
+//   const markupCountries = countriesListTemplate(countries);
+//   searchResultEl.innerHTML = markupCountries;
+
+//   searchResultEl.addEventListener('click', e => {
+//     inputEl.value = e.target.textContent.trim();
+//     inputedTextHandler();
+//   });
+
+//   return;
+// }
