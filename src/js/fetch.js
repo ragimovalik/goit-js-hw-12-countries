@@ -23,14 +23,7 @@ function inputedTextHandler() {
 
 function fetchHandler(countries) {
   if (countries.length >= 2 && countries.length < 10) {
-    const markupCountries = countriesListTemplate(countries);
-    searchResultEl.innerHTML = markupCountries;
-
-    searchResultEl.addEventListener('click', e => {
-      inputEl.value = e.target.textContent.trim();
-      inputedTextHandler();
-    });
-
+    renderCountries(countries);
     return;
   }
 
@@ -47,14 +40,33 @@ function fetchHandler(countries) {
   }
 }
 
-// function countriesRender(countries) {
-//   const markupCountries = countriesListTemplate(countries);
-//   searchResultEl.innerHTML = markupCountries;
+function renderCountries(countries) {
+  const markupCountries = countriesListTemplate(countries);
+  searchResultEl.innerHTML = markupCountries;
 
-//   searchResultEl.addEventListener('click', e => {
-//     inputEl.value = e.target.textContent.trim();
-//     inputedTextHandler();
-//   });
+  searchResultEl.addEventListener(
+    'click',
+    event => {
+      inputEl.value = event.target.textContent.trim();
+      inputedTextHandler();
+    },
+    { once: true },
+  );
+}
 
-//   return;
+// ===================================================
+// ++++
+// const markupCountries = countriesListTemplate(countries);
+// searchResultEl.innerHTML = markupCountries;
+// getCountryFromCountries();
+//++++
+// function getCountryFromCountries() {
+//   searchResultEl.addEventListener(
+//     'click',
+//     e => {
+//       inputEl.value = e.target.textContent.trim();
+//       inputedTextHandler();
+//     },
+//     { once: true },
+//   );
 // }
