@@ -42,21 +42,3 @@ export function myError() {
     }),
   });
 }
-
-export function fetchError() {
-  error({
-    text: 'Error! Some problems on url or connection',
-    delay: 2500,
-
-    stack: new Stack({
-      dir1: 'down',
-      dir2: 'right',
-      firstpos1: 80,
-      firstpos2: 10,
-      maxOpen: 2,
-      modal: false,
-      maxStrategy: 'close',
-      maxClosureCausesWait: false,
-    }),
-  });
-}

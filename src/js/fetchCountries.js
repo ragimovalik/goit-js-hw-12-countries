@@ -1,4 +1,4 @@
-import { fetchError, myError } from './notifications.js';
+import { myError } from './notifications.js';
 
 export default function fetchCountries(searchQuery) {
   return fetch(searchQuery)

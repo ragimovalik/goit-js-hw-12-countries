@@ -18,7 +18,6 @@ function inputedTextHandler() {
   fetchCountries(url)
     .then(fetchHandler)
     .catch(error => myError());
-  // .finally(() => {inputEl.value = ''});
 }
 
 function fetchHandler(countries) {
@@ -53,20 +52,3 @@ function renderCountries(countries) {
     { once: true },
   );
 }
-
-// ===================================================
-// ++++
-// const markupCountries = countriesListTemplate(countries);
-// searchResultEl.innerHTML = markupCountries;
-// getCountryFromCountries();
-//++++
-// function getCountryFromCountries() {
-//   searchResultEl.addEventListener(
-//     'click',
-//     e => {
-//       inputEl.value = e.target.textContent.trim();
-//       inputedTextHandler();
-//     },
-//     { once: true },
-//   );
-// }
