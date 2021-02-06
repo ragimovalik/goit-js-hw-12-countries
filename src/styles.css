@@ -70,6 +70,11 @@ body {
   text-align: center;
 }
 
+.countries__link {
+  display: block;
+  padding: 6px;
+}
+
 /* Country-card styles (when result = 1 country)*/
 
 .flex {
