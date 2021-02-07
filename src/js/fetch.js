@@ -46,6 +46,10 @@ function renderCountries(countries) {
   searchResultEl.addEventListener(
     'click',
     event => {
+      if (event.target.nodeName !== 'A') {
+        return;
+      }
+
       inputEl.value = event.target.textContent.trim();
       inputedTextHandler();
     },
